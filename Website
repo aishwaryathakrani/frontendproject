@@ -1,0 +1,37 @@
+using System.Data;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Collections.Generic;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web;
+using System;
+using System.Net.Mail;
+
+public partial class MyForm : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+       
+
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        SqlConnection con = new SqlConnection("Data Source=.; Initial Catalog = Login; Integrated Security =True");
+        con.Open();
+        SqlCommand cmd = new SqlCommand("insert into tbllogin" + "(Name,Gender,City,Email, Password) values(@Name,@Gender,@City,@Email, @Password)",con);
+        cmd.Parameters.AddWithValue("@Name", TextBox1.Text);
+        cmd.Parameters.AddWithValue("@Gender", RadioButtonList1.SelectedItem.Value);
+        cmd.Parameters.AddWithValue("@City", DropDownList1.SelectedIndex);
+        cmd.Parameters.AddWithValue("@Email", TextBox2.Text);
+        cmd.Parameters.AddWithValue("@Password", TextBox3.Text);
+        cmd.ExecuteNonQuery();
+    }
+
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        Response.Write(DropDownList1.SelectedItem.Text);
+    }
+}
+
